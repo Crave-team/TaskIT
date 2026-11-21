@@ -1,0 +1,33 @@
+{
+  "name": "taskit-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Express + Mongoose backend for TaskIT. Imports the framework-free services from ../src/api.",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch --env-file=.env src/index.js",
+    "test:mongo": "node --import ./test/setup-mongo.mjs --test ../src/api/__tests__/services.test.mjs ../src/api/__tests__/full.test.mjs ../src/api/__tests__/google.test.mjs ../src/api/__tests__/emailcode.test.mjs",
+    "test:http": "node --import ./test/setup-http.mjs --test ../src/api/__tests__/services.test.mjs ../src/api/__tests__/full.test.mjs ../src/api/__tests__/google.test.mjs ../src/api/__tests__/emailcode.test.mjs test/http.test.mjs",
+    "test:google": "node --test test/google.test.mjs",
+    "test:auth": "node --test test/auth-coverage.test.mjs",
+    "test:emailcode": "node --test test/emailcode.test.mjs",
+    "test": "npm run test:google && npm run test:auth && npm run test:emailcode && npm run test:live && npm run test:orgmodels && npm run test:mongo && npm run test:http && npm run test:migration",
+    "test:live": "node --test test/live.test.mjs",
+    "migrate:orgs": "node --env-file=.env scripts/migrate-groups-to-organizations.js",
+    "test:orgmodels": "node --test test/organizationModels.test.mjs",
+    "test:migration": "node --test test/migration.mongo.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "google-auth-library": "^11.3.1",
+    "helmet": "^8.3.0",
+    "mongoose": "^9.11.2",
+    "multer": "^2.4.0",
+    "nodemailer": "^10.2.1"
+  }
+}
